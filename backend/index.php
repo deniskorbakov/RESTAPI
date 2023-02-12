@@ -3,18 +3,20 @@
 header('Content-type: json/application');
 
 require 'connect.php';
+require 'function.php';
 
-$type = $_GET['q'];
+$q = $_GET['q'];
+
+$params = explode('/', $q);
+
+$type = $params[0];
+$id = $params[1];
 
 if ($type === 'posts') {
-    
-    $posts = mysqli_query($connection,"SELECT * FROM `posts`");
 
-    $postList = [];
-
-    while($post = mysqli_fetch_assoc($posts)) {
-        $postList[] = $post;
+    if ($type === 'posts') {
+        getPost($connection, $id);
+    } else {
+        getPosts($connection);
     }
-
-    echo json_encode($postList);
 }
