@@ -35,10 +35,25 @@ function addPost($connection, $data) {
     mysqli_query($connection, "INSERT INTO `posts`(`title`,`body`) VALUES ('$title','$body')");
     
     http_response_code(201);
-    
+
     $res = [
         "status" => false,
         "post_id" => mysqli_insert_id($connection)
+    ];
+
+    echo json_encode($res);
+}
+
+function updatePost($connection, $id, $data) {
+    $title = $data['title'];
+    $body = $data['body'];
+    mysqli_query($connection, "UPDATE `posts` SET `title` = '$title', `body` = '$body' WHERE `post`.`id` = '$id'");
+
+    http_response_code(200);
+
+    $res = [
+        "status" => false,
+        "message" => "Пост обнавлен"
     ];
 
     echo json_encode($res);
