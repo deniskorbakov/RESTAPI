@@ -1,7 +1,15 @@
 <?php 
 
+header('Content-type: json/application');
+
 require 'connect.php';
 
-$post = mysqli_query($connection,"SELECT * FROM `posts`");
+$posts = mysqli_query($connection,"SELECT * FROM `posts`");
 
-print_r($post);
+$postList = [];
+
+while($post = mysqli_fetch_assoc($posts)) {
+    $postList[] = $post;
+}
+
+echo json_encode($postList);
